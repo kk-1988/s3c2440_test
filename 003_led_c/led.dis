@@ -1,0 +1,67 @@
+
+led.elf:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	e3a0da01 	mov	sp, #4096	; 0x1000
+   4:	eb000000 	bl	c <main>
+
+00000008 <halt>:
+   8:	eafffffe 	b	8 <halt>
+
+0000000c <main>:
+   c:	e52db004 	push	{fp}		; (str fp, [sp, #-4]!)
+  10:	e28db000 	add	fp, sp, #0	; 0x0
+  14:	e24dd014 	sub	sp, sp, #20	; 0x14
+  18:	e50b0010 	str	r0, [fp, #-16]
+  1c:	e50b1014 	str	r1, [fp, #-20]
+  20:	e3a03456 	mov	r3, #1442840576	; 0x56000000
+  24:	e2833010 	add	r3, r3, #16	; 0x10
+  28:	e50b300c 	str	r3, [fp, #-12]
+  2c:	e3a03456 	mov	r3, #1442840576	; 0x56000000
+  30:	e2833014 	add	r3, r3, #20	; 0x14
+  34:	e50b3008 	str	r3, [fp, #-8]
+  38:	e51b200c 	ldr	r2, [fp, #-12]
+  3c:	e3a03b01 	mov	r3, #1024	; 0x400
+  40:	e5823000 	str	r3, [r2]
+  44:	e51b2008 	ldr	r2, [fp, #-8]
+  48:	e3a03000 	mov	r3, #0	; 0x0
+  4c:	e5823000 	str	r3, [r2]
+  50:	e3a03000 	mov	r3, #0	; 0x0
+  54:	e1a00003 	mov	r0, r3
+  58:	e28bd000 	add	sp, fp, #0	; 0x0
+  5c:	e8bd0800 	pop	{fp}
+  60:	e12fff1e 	bx	lr
+
+Disassembly of section .ARM.attributes:
+
+00000000 <.ARM.attributes>:
+   0:	00002541 	andeq	r2, r0, r1, asr #10
+   4:	61656100 	cmnvs	r5, r0, lsl #2
+   8:	01006962 	tsteq	r0, r2, ror #18
+   c:	0000001b 	andeq	r0, r0, fp, lsl r0
+  10:	00543405 	subseq	r3, r4, r5, lsl #8
+  14:	01080206 	tsteq	r8, r6, lsl #4
+  18:	04120109 	ldreq	r0, [r2], #-265
+  1c:	01150114 	tsteq	r5, r4, lsl r1
+  20:	01180317 	tsteq	r8, r7, lsl r3
+  24:	Address 0x00000024 is out of bounds.
+
+
+Disassembly of section .comment:
+
+00000000 <.comment>:
+   0:	43434700 	movtmi	r4, #14080	; 0x3700
+   4:	5328203a 	.word	0x5328203a
+   8:	6372756f 	.word	0x6372756f
+   c:	20797265 	.word	0x20797265
+  10:	202b2b47 	.word	0x202b2b47
+  14:	6574694c 	.word	0x6574694c
+  18:	30303220 	.word	0x30303220
+  1c:	2d317139 	.word	0x2d317139
+  20:	29363731 	.word	0x29363731
+  24:	332e3420 	.word	0x332e3420
+  28:	Address 0x00000028 is out of bounds.
+
