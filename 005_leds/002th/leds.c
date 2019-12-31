@@ -1,3 +1,6 @@
+//包含相关定义了寄存器的头文件
+//#include "s3c2440_soc.h"
+
 //防止编译器优化省略掉delay
 void delay(volatile int d)
 {
