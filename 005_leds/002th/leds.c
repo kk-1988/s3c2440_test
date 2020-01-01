@@ -23,7 +23,7 @@ int main(int which)
 	* config output set 0
 	*/
 	GPFCON &= ~((3 << 10) | (3 << 12) | (3 << 14) | (3 << 16));
-	GPFDAT |= ((1 << 10) | (1 << 12) | (1 << 14) | (1 << 16));
+	GPFCON |= ((1 << 10) | (1 << 12) | (1 << 14) | (1 << 16));
 
 	/*
 	* Ñ­»·µãÁÁ
@@ -32,7 +32,7 @@ int main(int which)
 	{	
 		tmp = ~val;
 		tmp &= 0xf;
-		GPFCON = ~(0xf << 5);
+		GPFDAT = ~(0xf << 5);
 		GPFDAT |= tmp << 5;
 		delay(100000);
 		val++;
