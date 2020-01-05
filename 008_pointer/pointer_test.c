@@ -104,6 +104,24 @@ void test3()
 	printf("*pi = 0x%x\r\n",*pi);	
 }
 
+void test4()
+{
+	char *pc="abc";
+
+	/* 所有变量都保存在内存中,用&取地址符 */
+	printf("pc = %p\r\n",pc);
+	printf("&pc = %p\r\n",&pc);
+
+	/* 变量保存某些值 */
+
+	/* 使用指针 */
+	printf("*pc = %c\r\n",*pc);
+	pc++;
+	printf("*pc = %c\r\n",*pc);
+	pc++;
+	printf("*pc = %c\r\n",*pc);	
+}
+
 int main(int argc,char *argv[])
 {
 	printf("sizeof(char) = %d\r\n",sizeof(char));
@@ -114,7 +132,8 @@ int main(int argc,char *argv[])
 	//test0();
 	//test1();
 	//test2();
-	test3();
+	//test3();
+	test4();
 
 	return 0;
 }
