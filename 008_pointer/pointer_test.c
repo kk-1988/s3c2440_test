@@ -116,6 +116,7 @@ void test4()
 
 	/*  π”√÷∏’Î */
 	printf("*pc = %c\r\n",*pc);
+	printf("pc = %p\r\n",pc);
 	pc++;
 	printf("*pc = %c\r\n",*pc);
 	pc++;
