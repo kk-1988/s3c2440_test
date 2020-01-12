@@ -17,7 +17,6 @@ volatile unsigned long *gpbdat = 0;
 
 static int first_drv_open(struct inode *inode,struct file *file)
 {
-	printk("first drv open\n");
 	/* 配置GPB为输出 */
 	gpbcon &= ~();
 	return 0;	
@@ -25,10 +24,19 @@ static int first_drv_open(struct inode *inode,struct file *file)
 
 static ssize_t first_drv_write(struct file *file, const char _user *buf,size_t count,loff_t *ppos)
 {
-	printk("first drv write\n");
 	int val;
 	/* 对相关引脚拉高拉低 */
 	copy_from_user(&val, buf, count);
+	if(1 == val)
+	{
+		//点亮,拉低
+		
+	}
+	else
+	{
+		//熄灭,清0
+	}
+	
 	return 0;
 }
 
