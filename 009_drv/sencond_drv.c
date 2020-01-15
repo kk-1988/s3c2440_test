@@ -24,7 +24,8 @@ int sencond_drv_init(void)
 void sencond_drv_exit(void)
 {
 	unregister_chrdev(major, "sencond_drv");		//Ð¶ÔØÇý¶¯³ÌÐò
-	iounremap(gpbcon);
+	class_device_unregister(senconddrv_class_dev);
+	class_destroy(senconddrv_class);
 	return 0;
 }
 
