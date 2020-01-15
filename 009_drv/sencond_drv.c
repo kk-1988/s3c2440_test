@@ -55,4 +55,6 @@ static struct file_operations sencond_drv_fops = {
 module_init(sencond_drv_init);
 //³ö¿Úº¯Êý
 module_exit(sencond_drv_exit);
+//license
+MODULE_LICENSE("GPL");
 
