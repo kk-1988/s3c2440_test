@@ -17,7 +17,7 @@ int sencond_drv_init(void)
 {
 	major = register_chrdev(0, "sencond_drv", sencond_drv_fops);		//注册驱动程序(告诉内核)
 	senconddrv_class = class_create(THIS_MODULE, "senconddrv");
-	senconddrv_class_dev = class_device_create(senconddrv_class, NULL, MKDEV(major,0), NULL, "xyz");	/* /dev/xyz */
+	senconddrv_class_dev = class_device_create(senconddrv_class, NULL, MKDEV(major,0), NULL, "buttons");	/* /dev/xyz */
 	return 0;
 }
 
