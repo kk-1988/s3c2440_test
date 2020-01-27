@@ -47,3 +47,14 @@ int getchar(void)
 	while(!(UTRSTAT0 & (1 << 0)));
 	return URXH0;
 }
+
+int puts(const char *s)
+{
+	while(*s)
+	{
+		putchar(*s);
+		s++;
+	}
+}
+
+
