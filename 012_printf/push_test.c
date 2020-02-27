@@ -10,7 +10,7 @@ struct person{
 
 int push_test(const char *format,...)
 {
-	char *p = (char *)&format;
+	//char *p = (char *)&format;
 	int i;
 	char c;
 	struct person per;
@@ -20,6 +20,8 @@ int push_test(const char *format,...)
 	printf("arg1 : %s",format);
 
 	p = p + sizeof(char *);
+	va_start(p, format);
+
 	i = *((int *)p);
 	printf("arg2 = %d\r\n", i);
 
