@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <>
+#include <stdarg.h>
 
 struct person{
 	char *name;
@@ -15,7 +15,7 @@ int push_test(const char *format,...)
 	char c;
 	struct person per;
 	double d;
-	va_list *p;
+	va_list p;
 	
 	printf("arg1 : %s",format);
 
