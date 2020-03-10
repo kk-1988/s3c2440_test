@@ -4,6 +4,8 @@
 
 char g_char = 'A';
 const char g_char2 = 'B';
+const char g_char2 = 'c';
+
 int g_a = 0;
 int g_b;
 static int a_jubu = 10;
