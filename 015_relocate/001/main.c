@@ -7,6 +7,7 @@ char g_char = 'A';
 const char g_char2 = 'B';
 int g_a = 0;
 int g_b;
+static int a_jubu = 10;
 
 int main(void)
 {
