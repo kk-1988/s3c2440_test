@@ -55,7 +55,14 @@ _start:
 	ldr sp, =0x40000000+4096 /* ÏÈ¼ÙÉèÊÇnorÆô¶¯ */
 	moveq sp, #4096  /* nandÆô¶¯ */
 	streq r0, [r1]   /* »Ö¸´Ô­À´µÄÖµ */
-	
+
+	/*
+	* é‡å®šä½dataæ®µ
+	*/
+	mov r1, #0x800
+	ldr r0, [r1]
+	mov r1, #0x30000000
+	str r0, [r1]
 
 	bl main
 
