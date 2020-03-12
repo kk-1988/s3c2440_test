@@ -57,6 +57,11 @@ _start:
 	streq r0, [r1]   /* »Ö¸´Ô­À´µÄÖµ */
 
 	/*
+	* åˆå§‹åŒ–sdram
+	*/
+	bl sdram_init
+
+	/*
 	* é‡å®šä½dataæ®µ
 	*/
 	mov r1, #0x800
