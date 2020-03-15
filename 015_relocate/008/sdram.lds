@@ -1,9 +1,15 @@
 SECTIONS {
 	. = 0x30000000;
+	
 	. = ALIGN(4);
+	.text 0		: 
+	{ 
+		*(.text) 
+	}
 
-	.text 0 : { *(.text) }
-	.rodata : { *(.rodata) }
+	. = ALIGN(4);
+	.rodata 	: { *(.rodata) }
+	
 	.data 0x30000000 : AT(0x800) 
 	{ 
 		data_load_addr = LOADADDR(.data);
