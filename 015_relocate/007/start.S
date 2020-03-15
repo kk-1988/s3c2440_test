@@ -71,7 +71,7 @@ _start:
 cpy:
 	ldr r4, [r1]
 	str r4, [r2]
-	add r1, r1, #4	/*r1++，即g_char++ */
+	add r1, r1, #4
 	add r2, r2, #4
 	cmp r2, r3
 	ble	cpy

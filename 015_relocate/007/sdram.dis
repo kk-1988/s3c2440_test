@@ -60,7 +60,7 @@ Disassembly of section .text:
   b8:	30000800 	.word	0x30000800
   bc:	30000000 	.word	0x30000000
   c0:	30000002 	.word	0x30000002
-  c4:	30000002 	.word	0x30000002
+  c4:	30000004 	.word	0x30000004
   c8:	3000000c 	.word	0x3000000c
 
 000000cc <delay>:
