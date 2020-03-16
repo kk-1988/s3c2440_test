@@ -62,11 +62,11 @@ _start:
 	bl sdram_init
 
 	/*
-	* 重定位data段
+	* 重定位data段,rodata,data段整个程序
 	*/
-	ldr r1, = data_load_addr	/* data段在bin文件中的地址,加载地址 */
-	ldr r2, = data_start		/* data段在重定位地址，运行时的开始地址 */
-	ldr r3, = data_end			/* data结束地址 */
+	mov r1, #0
+	ldr r2, = _start		/* 第1条指令运行时地址 */
+	ldr r3, = bss_start		/* bss段的起始地址 */
 
 cpy:
 	ldr r4, [r1]
