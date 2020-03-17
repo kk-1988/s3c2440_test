@@ -2,7 +2,7 @@ SECTIONS {
 	. = 0x30000000;
 	
 	. = ALIGN(4);
-	.text 0		: 
+	.text		: 
 	{ 
 		*(.text) 
 	}
