@@ -16,6 +16,33 @@ void sdram_init(void)
 	MRSRB7   = 0x20;
 }
 
+//下面的函数不是位置无关的，所以实际上在板子上是无法运行的
+void sdram_init2(void)
+{
+	unsigned int arr[] = {
+		0x22000000, 		//BWSCON
+		0x00000700, 		//BANKCON0
+		0x00000700, 		//BANKCON1
+		0x00000700, 		//BANKCON2
+		0x00000700, 		//BANKCON3
+		0x00000700, 		//BANKCON4
+		0x00000700, 		//BANKCON5
+		0x00018001, 		//BANKCON6
+		0x00018001, 		//BANKCON7
+		0x008404f5, 		//REFRESH,HCLK=12MHz
+		0x000000b1, 		//BANKSIZE
+		0x00000020, 		//MRSRB6
+		0x00000020,			//MRSRB7
+		};
+	volatile unsigned int *p = (volatile unsigned int *)0x48000000;
+	int i;
+	for(i = 0;i < 13;i++)
+	{
+		*p = arr[i];
+		p++;
+	}
+}
+
 int sdram_test(void)
 {
 	volatile unsigned char *p = (volatile unsigned char *)0x30000000;

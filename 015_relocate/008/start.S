@@ -59,7 +59,8 @@ _start:
 	/*
 	* 初始化sdram
 	*/
-	bl sdram_init
+	/* bl sdram_init1 */
+	bl sdram_init2		//用到了有初始值的rodata里面，不能使用位置无关码
 
 	/*
 	* 重定位data段,rodata,data段整个程序
