@@ -1,14 +1,20 @@
 
 #include "s3c2440_soc.h"
 
-void copy2sdram(unsigned int *src, unsigned int *dst,unsigned int len)
+void copy2sdram(volatile unsigned int *src, volatile unsigned int *dst,unsigned int len)
 {
-	volatile unsigned int *p = (volatile unsigned int *)src;
+	unsigned int i;
 
-	while(p <= dst)
+	while(i <= len)
 	{
-		
+		*dst++ = *src++;
+		i += 4;
 	}
+}
+
+void clean_bss(volatile unsigned int *start, volatile unsigned int *end)
+{
+	
 }
 
 void sdram_init(void)
