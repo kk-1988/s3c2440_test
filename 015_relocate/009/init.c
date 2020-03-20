@@ -14,7 +14,10 @@ void copy2sdram(volatile unsigned int *src, volatile unsigned int *dst,unsigned 
 
 void clean_bss(volatile unsigned int *start, volatile unsigned int *end)
 {
-	
+	while(start <= end)
+	{
+		*start++ = 0;
+	}
 }
 
 void sdram_init(void)

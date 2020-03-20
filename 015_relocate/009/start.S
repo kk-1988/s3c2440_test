@@ -76,8 +76,8 @@ _start:
 	* 清除bss段
 	*/
 	ldr r0, = bss_start
-	ldr r1, = _end
-
+	ldr r1, = bss_end
+	
 	bl clean_bss	/* c函数，用于清除bss段，需要的参数为start，end */
 	
 
