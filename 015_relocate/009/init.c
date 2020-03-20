@@ -3,7 +3,7 @@
 
 void copy2sdram(volatile unsigned int *src, volatile unsigned int *dst,unsigned int len)
 {
-	unsigned int i;
+	unsigned int i = 0;
 
 	while(i <= len)
 	{
