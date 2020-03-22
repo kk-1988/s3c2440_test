@@ -91,9 +91,14 @@ reset:
 	*/	
 	bl clean_bss
 
+	bl uart0_init
+
+	bl print1
 	/* 故意加入一条未定义指令 */
 und_code:
 	.word 0xff123456
+	
+	bl print2
 
 	//bl main
 	ldr pc, = main /* 绝对跳转，跳到SDRAM */
