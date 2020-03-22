@@ -96,7 +96,7 @@ reset:
 	bl print1
 	/* 故意加入一条未定义指令 */
 und_code:
-	.word 0xff123456
+	.word 0x03000000		//0xdeadc0de,这条也是未定义指令
 	
 	bl print2
 
