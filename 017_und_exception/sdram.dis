@@ -5,7 +5,7 @@ sdram.elf:     file format elf32-littlearm
 Disassembly of section .text:
 
 30000000 <_start>:
-30000000:	ea000000 	b	30000008 <do_und>
+30000000:	ea00000e 	b	30000040 <reset>
 30000004:	eaffffff 	b	30000008 <do_und>
 
 30000008 <do_und>:
@@ -14,7 +14,7 @@ Disassembly of section .text:
 30000010:	e10f0000 	mrs	r0, CPSR
 30000014:	e59f1098 	ldr	r1, [pc, #152]	; 300000b4 <halt+0x4>
 30000018:	eb0001fa 	bl	30000808 <printException>
-3000001c:	e87d9fff 	ldmda	sp!, {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, sl, fp, ip, pc}^
+3000001c:	e8fd9fff 	ldm	sp!, {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, sl, fp, ip, pc}^
 
 30000020 <und_string>:
 30000020:	65646e75 	.word	0x65646e75
@@ -25,6 +25,8 @@ Disassembly of section .text:
 30000034:	7865206e 	.word	0x7865206e
 30000038:	74706563 	.word	0x74706563
 3000003c:	006e6f69 	.word	0x006e6f69
+
+30000040 <reset>:
 30000040:	e3a00453 	mov	r0, #1392508928	; 0x53000000
 30000044:	e3a01000 	mov	r1, #0	; 0x0
 30000048:	e5801000 	str	r1, [r0]

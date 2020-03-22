@@ -5,8 +5,6 @@ _start:
 	b reset	/* vector 0: reset */
 	b do_und	/* vectro 4:und */
 
-reset:
-
 do_und:
 	/* sp und未设置，先设置它 */
 	ldr sp, = 0x34000000
@@ -20,11 +18,12 @@ do_und:
 	bl printException
 	
 	/* 恢复现场 */
-	ldmfa sp!, {r0-r12, pc}^	/*尖括号会把spsr的值恢复到cpsr中*/ 
+	ldmia sp!, {r0-r12, pc}^	/*尖括号会把spsr的值恢复到cpsr中*/ 
 	
 und_string:
 	.string "undefined instruction exception"
 
+reset:
 	/* �رտ��Ź� */
 	ldr r0, =0x53000000
 	ldr r1, =0
