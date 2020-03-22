@@ -5,6 +5,8 @@ _start:
 	b reset	/* vector 0: reset */
 	b do_und	/* vectro 4:und */
 
+reset:
+
 do_und:
 	/* sp und未设置，先设置它 */
 	ldr sp, = 0x34000000
