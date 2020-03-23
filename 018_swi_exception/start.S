@@ -11,11 +11,14 @@ _start:
 
 	/* 这么处理之后，就是不管start.S多大，都会在4k里面了 */
 	ldr pc, und_addr  /* vectro 4:und */
-	//ldr pc, swi_addr  /* vectro 8:swi */
+	ldr pc, swi_addr  /* vectro 8:swi */
 
 	/* 这里处理之后 */
 und_addr:
 	.word do_und
+
+swi_addr:
+	.word do_swi
 
 do_und:
 	/* 
@@ -45,6 +48,37 @@ do_und:
 	
 und_string:
 	.string "undefined instruction exception"
+
+.align 4
+
+do_swi:
+	/* 
+	* 执行到这里之前：
+	* 1.lr_svc 保存有被中断模式下的下一条即将执行的指令的地址
+	* 2.SPSR_svc 保存有被中断模式的CPSR
+	* 3.CPSR中的M4-M0被设置位10011b,进入到svc模式
+	* 4.跳到0x8的地方执行swi向量
+	*/
+
+	/* sp und未设置，先设置它 */
+	ldr sp, = 0x33e00000
+
+	/*
+	* lr是异常处理完后的返回地址，也要保存
+	*/
+	stmdb sp!, {r0-r12, lr}	/* 在und异常处理函数中有可能会修改r0-r12，所以先保存下来 */
+	
+	/* 保存现场 */	
+	/* 处理swis异常 */
+	mrs r0, cpsr
+	ldr r1, = swi_string
+	bl printException
+	
+	/* 恢复现场 */
+	ldmia sp!, {r0-r12, pc}^	/*尖括号会把spsr的值恢复到cpsr中*/ 
+	
+swi_string:
+	.string "swi exception"
 
 /* 保证后面的指令是4字节对齐 */
 .align 4
@@ -125,9 +159,8 @@ reset:
 	bic r0, r0, #0xf	/* 修改m4-m0为0b10000,进入usr模式 */
 	msr cpsr, r0		/* 把寄存器的值放入cpsr 中 */
 	
-
 	/* 设置sp_usr(usr模式下的栈) */
-	ldr sp, =0x34000000
+	ldr sp, =0x33f00000
 
 	ldr pc, = sdram
 sdram:
@@ -141,9 +174,8 @@ und_code:
 	bl print2
 
 	/* 引入swi指令 */
-	//swi 0x123	/* 执行此命令，触发SWI异常,进入0x8地方执行(向量地址是0x8) */
+	swi 0x123	/* 执行此命令，触发SWI异常,进入0x8地方执行(向量地址是0x8) */
 	
-
 	//bl main
 	ldr pc, = main /* 绝对跳转，跳到SDRAM */
 
