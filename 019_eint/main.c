@@ -10,6 +10,9 @@ int g_B;
 
 int main(void)
 {
+	interrupt_init() 	/* 初始化中断 */
+	key_eint_init()		/* 初始化按键,设为中断源 */
+
 	puts("\n\rg_A = ");
 	printHex(g_A);
 	puts("\n\r");
