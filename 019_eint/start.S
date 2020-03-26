@@ -160,7 +160,7 @@ reset:
 	*/
 	mrs	r0, cpsr			/* 读出cpsr */
 	bic r0, r0, #0xf		/* 修改m4-m0为0b10000,进入usr模式 */\
-	bic r0, r0, #~(1<<7)	/* 清除I位，使能中断 */
+	//bic r0, r0, #~(1<<7)	/* 清除I位，使能中断 */
 	msr cpsr, r0			/* 把寄存器的值放入cpsr 中 */
 	
 	/* 设置sp_usr(usr模式下的栈) */
@@ -179,8 +179,6 @@ und_code:
 
 	/* 引入swi指令 */
 	swi 0x123	/* 执行此命令，触发SWI异常,进入0x8地方执行(向量地址是0x8) */
-	bl interrupt_init	/* 初始化中断 */
-	bl key_eint_init	/* 初始化按键,设为中断源 */
 	
 	//bl main
 	ldr pc, = main /* 绝对跳转，跳到SDRAM */
