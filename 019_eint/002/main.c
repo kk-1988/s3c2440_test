@@ -10,6 +10,10 @@ int g_B;
 
 int main(void)
 {
+	//后面如果改成led控制，则在这里进行初始化
+	//因为现在只是printf打印，所以先直接注释掉
+	//led_init();
+	
 	interrupt_init(); 	/* 初始化中断 */
 	key_eint_init();		/* 初始化按键,设为中断源 */
 
