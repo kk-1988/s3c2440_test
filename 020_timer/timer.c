@@ -30,3 +30,11 @@ void timer_init(void)
 	
 }
 
+void timer_irq(void)
+{
+	/* 点灯计数 */
+	static int cnt = 0;
+	puts("timer_irq");
+	puts("\r\n");
+}
+

@@ -9,6 +9,9 @@
 void interrupt_init(void)
 {
 	INTMSK &= ~((1 << 0) | (1 << 1) | (1 << 2) | (1 << 4));
+	/* 把定时器中断对应的位清0 */
+	INTMSK &= ~(1 << 10);	/* enable timer0 interrupt */
+	
 }
 
 /* 初始化按键，设为中断源 */
@@ -45,33 +48,33 @@ void key_eint_irq(int irq)
 	{
 		if(val1 & (1 << 0))
 		{
-			printf("irq0 => led off\r\n");
+			puts("irq0 => led off\r\n");
 		}
 		else
 		{
-			printf("irq0 => led on\r\n");
+			puts("irq0 => led on\r\n");
 		}
 	}
 	else if(irq == 1)	/* eint1 */
 	{
 		if(val1 & (1 << 1))
 		{
-			printf("irq1 => led off\r\n");
+			puts("irq1 => led off\r\n");
 		}
 		else
 		{
-			printf("irq1 => led on\r\n");
+			puts("irq1 => led on\r\n");
 		}
 	}
 	else if(irq == 2)  /* eint2 */
 	{
 		if(val1 & (1 << 2))
 		{
-			printf("irq2 => led off\r\n");
+			puts("irq2 => led off\r\n");
 		}
 		else
 		{
-			printf("irq2 => led on\r\n");
+			puts("irq2 => led on\r\n");
 		}
 	}
 	else if(irq == 4)	/* eint4 按下这个按键，所有灯点亮或者熄灭*/
@@ -81,11 +84,11 @@ void key_eint_irq(int irq)
 		{
 			if(val1 & (1 << 4))
 			{
-				printf("irq4 => led off\r\n");
+				puts("irq4 => led off\r\n");
 			}
 			else
 			{
-				printf("irq4 => led on\r\n");
+				puts("irq4 => led on\r\n");
 			}
 		} 
 	}
@@ -103,6 +106,10 @@ void handle_irq_c(void)
 	if (bit == 0 || bit == 1 || bit == 2 || bit == 4)  /* etnt0,1,2,eint8-23 */
 	{
 		key_eint_irq(bit);	/* 处理中断，清中断源EINTPEND */
+	}
+	else if(bit == 10)
+	{
+		timer_irq();
 	}
 	
 	/* 清中断: 从源头开始清 */
