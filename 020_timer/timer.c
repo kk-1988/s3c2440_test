@@ -22,7 +22,7 @@ void timer_init(void)
 	TCON |= (1 << 1);	/* */
 
 	/* 设置为自动加载并启动 */
-	TCON &= (1 << 1);
+	TCON &= ~(1 << 1);
 	//start | auto start
 	TCON |= (1 << 0) | (1 << 3);
 	
