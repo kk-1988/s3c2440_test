@@ -33,6 +33,7 @@ void timer_init(void)
 	TCON &= ~(1 << 1);
 	//start | auto start
 	TCON |= (1 << 0) | (1 << 3);
+
 	
 	/* 设置中断 */
 	register_irq(10, timer_irq);
