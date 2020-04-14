@@ -24,6 +24,11 @@ void third_drv_exit(void)
 
 static int third_drv_open(struct inode *inode,struct file *file)
 {
+	request_irq(IRQ_EINT1, buttons_irq, IRQT_BOTHEDGE, "K1", 1);
+	request_irq(IRQ_EINT4, buttons_irq, IRQT_BOTHEDGE, "K2", 1);
+	request_irq(IRQ_EINT2, buttons_irq, IRQT_BOTHEDGE, "K3", 1);
+	request_irq(IRQ_EINT0, buttons_irq, IRQT_BOTHEDGE, "K4", 1);
+	
 	return 0;	
 }
 
