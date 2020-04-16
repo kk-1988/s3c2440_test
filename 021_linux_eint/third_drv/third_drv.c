@@ -5,6 +5,11 @@ static int major;
 static struct class *thirddrv_class;
 static struct class_device *thirddrv_class_dev;
 
+sturct pin_desc{
+	unsigned int pin;
+	unsigned int key_value;
+};
+
 int third_drv_init(void)
 {
 	major = register_chrdev(0, "sencond_drv", sencond_drv_fops);		//注册驱动程序(告诉内核)
@@ -19,13 +24,15 @@ void third_drv_exit(void)
 	//??
 	class_device_unregister(senconddrv_class_dev);
 	class_destroy(senconddrv_class);
+
 	return 0;
 }
 
 static irqreturn_t buttons_irq(int irq, void *dev_id)
 {
 	printk("irq = %d\n", irq);
-	return IRQ_HANDLED;
+	s3c2410_gpio_getpin(unsigned int pin);
+	return IRQ_RETVAL(IRQ_HANDLED);
 }
 
 static int third_drv_open(struct inode *inode,struct file *file)
