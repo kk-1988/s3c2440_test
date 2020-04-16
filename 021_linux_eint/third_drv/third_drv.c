@@ -10,7 +10,16 @@ sturct pin_desc{
 	unsigned int key_value;
 };
 
-struct pin_desc pins;
+/*
+* EINT1,4,2,0(K1,K2,K3,K4)
+*/
+struct pin_desc pins_desc[4] = {
+	{S3C2410_GPG10, 0x01},
+	{S3C2410_GPG10, 0x01},
+	{S3C2410_GPG10, 0x01},
+	{S3C2410_GPG10, 0x01},
+};
+
 int third_drv_init(void)
 {
 	major = register_chrdev(0, "sencond_drv", sencond_drv_fops);		//注册驱动程序(告诉内核)
