@@ -10,6 +10,7 @@ sturct pin_desc{
 	unsigned int key_value;
 };
 
+struct pin_desc pins;
 int third_drv_init(void)
 {
 	major = register_chrdev(0, "sencond_drv", sencond_drv_fops);		//注册驱动程序(告诉内核)
