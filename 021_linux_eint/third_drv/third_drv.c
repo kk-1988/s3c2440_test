@@ -62,20 +62,19 @@ static ssize_t third_drv_write(struct file *file, const char _user *buf,size_t c
 
 static ssize_t third_drv_read(struct file *file, char _user *buf, size_t size, loff_t *ppos)
 {
-	unsigned char key_vals[4];
-	int regval;
-
-	if(size != size(key_vals))
+	if(size != 1)
 		return -EINVAL;
 
+	/* 如果没有按键动作，休眠 */
+
 	/*
-	* ��
+	* 如果有按键动作，返回
 	*/
-	
+	copy_to_user(buf,key_val, 1);
 
 	
 
-	return size(key_vals);
+	return 1;
 }
 
 static int third_drv_close(struct inode *inode, struct file *file)
