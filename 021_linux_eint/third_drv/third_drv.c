@@ -89,8 +89,8 @@ static ssize_t third_drv_read(struct file *file, char _user *buf, size_t size, l
 	/*
 	* 如果有按键动作，返回
 	*/
-	copy_to_user(buf,key_val, 1);
-	ev_press = 1;
+	copy_to_user(buf,&key_val, 1);
+	ev_press = 0;
 	
 	return 1;
 }
