@@ -5,6 +5,11 @@ static int major;
 static struct class *thirddrv_class;
 static struct class_device *thirddrv_class_dev;
 
+static DECLARE_WAIT_QUEUE_HEAD(button_waitq);
+
+/* 中断事件标志,中断服务程序将它置1，third_drv_read将它清0 */
+static volatile int ev_press = 0;
+
 sturct pin_desc{
 	unsigned int pin;
 	unsigned int key_value;
@@ -40,8 +45,21 @@ void third_drv_exit(void)
 
 static irqreturn_t buttons_irq(int irq, void *dev_id)
 {
+	int pinval;
 	printk("irq = %d\n", irq);
-	s3c2410_gpio_getpin(unsigned int pin);
+	pinval = s3c2410_gpio_getpin(pindesc->pin);
+	if(pinval)
+	{
+		printk("up\r\n");
+	}
+	else
+	{
+		printk("down\r\n");
+	}
+
+	ev_press = 1;							/* 表示中断发生了 */
+	wake_up_interruptible(&button_waitq);	/* 唤醒休眠的进程 */
+	
 	return IRQ_RETVAL(IRQ_HANDLED);
 }
 
@@ -66,14 +84,14 @@ static ssize_t third_drv_read(struct file *file, char _user *buf, size_t size, l
 		return -EINVAL;
 
 	/* 如果没有按键动作，休眠 */
+	wait_event_interruptible(button_waitq, ev_press);
 
 	/*
 	* 如果有按键动作，返回
 	*/
 	copy_to_user(buf,key_val, 1);
-
+	ev_press = 1;
 	
-
 	return 1;
 }
 
