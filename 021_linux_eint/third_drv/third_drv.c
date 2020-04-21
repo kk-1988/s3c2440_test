@@ -45,8 +45,9 @@ void third_drv_exit(void)
 
 static irqreturn_t buttons_irq(int irq, void *dev_id)
 {
-	int pinval;
-	printk("irq = %d\n", irq);
+	struct pin_desc *pindesc = (struct pin_desc *)dev_id;
+	unsigned int pinval;
+
 	pinval = s3c2410_gpio_getpin(pindesc->pin);
 	if(pinval)
 	{
