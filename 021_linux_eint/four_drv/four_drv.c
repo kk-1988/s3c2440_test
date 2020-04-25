@@ -1,5 +1,6 @@
 #include <linux/module.h>
 #include <linux/kernel.h>
+#include <linux/poll.h>
 
 static int major;
 static struct class *fourthdrv_class;
@@ -107,12 +108,23 @@ static int fourth_drv_close(struct inode *inode, struct file *file)
 	return 0;
 }
 
+static unsigned fourth_drv_poll(struct file *file, poll_table *table)
+{
+	unsigned int res = 0;
+	poll_wait(file, &button_waitq, wait);	//ä¸ä¼šç«‹å³ä¼‘çœ 
+	if (ev_press)
+		res |= POLLIN | POLLRDNORM;
+
+	return res;
+}
+
 static struct file_operations fourth_drv_fops = {
 	.owner = THIS_MODULE,
 	.open = fourth_drv_open,
 	.write = fourth_drv_write,
 	.read = fourth_drv_read,
 	.release = fourth_drv_close,
+	.poll = fourth_drv_poll,
 };
 
 //Èë¿Úº¯Êı
