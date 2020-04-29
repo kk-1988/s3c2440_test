@@ -3,8 +3,8 @@
 #include <linux/poll.h>
 
 static int major;
-static struct class *fourthdrv_class;
-static struct class_device *fourthdrv_class_dev;
+static struct class *sixdrv_class;
+static struct class_device *sixdrv_class_dev;
 
 static DECLARE_WAIT_QUEUE_HEAD(button_waitq);
 
@@ -26,7 +26,7 @@ struct pin_desc pins_desc[4] = {
 	{S3C2410_GPG10, 0x01},
 };
 
-int fourth_drv_init(void)
+int six_drv_init(void)
 {
 	major = register_chrdev(0, "fourth_drv", fourth_drv_fops);		//注册驱动程序(告诉内核)
 	fourthdrv_class = class_create(THIS_MODULE, "fourthdrv");
@@ -34,7 +34,7 @@ int fourth_drv_init(void)
 	return 0;
 }
 
-void fourth_drv_exit(void)
+void six_drv_exit(void)
 {
 	unregister_chrdev(major, "fourth_drv");		//卸载驱动程序
 	//??
@@ -65,7 +65,7 @@ static irqreturn_t buttons_irq(int irq, void *dev_id)
 	return IRQ_RETVAL(IRQ_HANDLED);
 }
 
-static int fourth_drv_open(struct inode *inode,struct file *file)
+static int six_drv_open(struct inode *inode,struct file *file)
 {
 	request_irq(IRQ_EINT1, buttons_irq, IRQT_BOTHEDGE, "K1", 1);
 	request_irq(IRQ_EINT4, buttons_irq, IRQT_BOTHEDGE, "K2", 1);
@@ -75,12 +75,12 @@ static int fourth_drv_open(struct inode *inode,struct file *file)
 	return 0;	
 }
 
-static ssize_t fourth_drv_write(struct file *file, const char _user *buf,size_t count,loff_t *ppos)
+static ssize_t six_drv_write(struct file *file, const char _user *buf,size_t count,loff_t *ppos)
 {
 	return 0;
 }
 
-static ssize_t fourth_drv_read(struct file *file, char _user *buf, size_t size, loff_t *ppos)
+static ssize_t six_drv_read(struct file *file, char _user *buf, size_t size, loff_t *ppos)
 {
 	if(size != 1)
 		return -EINVAL;
@@ -97,7 +97,7 @@ static ssize_t fourth_drv_read(struct file *file, char _user *buf, size_t size, 
 	return 1;
 }
 
-static int fourth_drv_close(struct inode *inode, struct file *file)
+static int six_drv_close(struct inode *inode, struct file *file)
 {
 	//1,4,2,0->0,2,4,1
 	free_irq(IRQ_EINT0, 1);
@@ -108,7 +108,7 @@ static int fourth_drv_close(struct inode *inode, struct file *file)
 	return 0;
 }
 
-static unsigned fourth_drv_poll(struct file *file, poll_table *table)
+static unsigned six_drv_poll(struct file *file, poll_table *table)
 {
 	unsigned int res = 0;
 	poll_wait(file, &button_waitq, wait);	//涓嶄細绔嬪嵆浼戠湢
@@ -118,18 +118,18 @@ static unsigned fourth_drv_poll(struct file *file, poll_table *table)
 	return res;
 }
 
-static struct file_operations fourth_drv_fops = {
+static struct file_operations six_drv_fops = {
 	.owner = THIS_MODULE,
-	.open = fourth_drv_open,
-	.write = fourth_drv_write,
-	.read = fourth_drv_read,
-	.release = fourth_drv_close,
-	.poll = fourth_drv_poll,
+	.open = six_drv_open,
+	.write = six_drv_write,
+	.read = six_drv_read,
+	.release = six_drv_close,
+	.poll = six_drv_poll,
 };
 
 //入口函数
-module_init(fourth_drv_init);
+module_init(six_drv_init);
 //出口函数
-module_exit(fourth_drv_exit);
+module_exit(six_drv_exit);
 //license
 MODULE_LICENSE("GPL");
