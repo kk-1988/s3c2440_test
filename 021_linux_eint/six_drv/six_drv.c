@@ -8,8 +8,11 @@ static struct class_device *sixthdrv_class_dev;
 
 static DECLARE_WAIT_QUEUE_HEAD(button_waitq);
 
-atomic_t canopen = ATOMIC_INIT(1);
+//原子操作
+//atomic_t canopen = ATOMIC_INIT(1);
 
+//信号量
+static DECLARE_MUTEX(button_lock);
 
 /* 中断事件标志,中断服务程序将它置1，fourth_drv_read将它清0 */
 static volatile int ev_press = 0;
@@ -70,11 +73,18 @@ static irqreturn_t buttons_irq(int irq, void *dev_id)
 
 static int sixth_drv_open(struct inode *inode,struct file *file)
 {
+#if 0
+	//原子操作
 	if (!atomic_dec_and_test(&canopen))
 	{
 		atomic_inc(&canopen);
 		return -EBUSY;		
 	}
+#else
+	//信号量(能获得才能运行下去)
+	down(&button_lock);
+#endif
+
 
 	request_irq(IRQ_EINT1, buttons_irq, IRQT_BOTHEDGE, "K1", 1);
 	request_irq(IRQ_EINT4, buttons_irq, IRQT_BOTHEDGE, "K2", 1);
@@ -108,13 +118,19 @@ static ssize_t sixth_drv_read(struct file *file, char _user *buf, size_t size, l
 
 static int sixth_drv_close(struct inode *inode, struct file *file)
 {	
+#if 0
 	atomic_inc(&canopen);
+//#else
+	up(&button_lock);
+#endif
+
 	//1,4,2,0->0,2,4,1
 	free_irq(IRQ_EINT0, 1);
 	free_irq(IRQ_EINT2, 1);
 	free_irq(IRQ_EINT4, 1);
 	free_irq(IRQ_EINT1, 1);
 
+	up(&button_lock);
 	return 0;
 }
 
