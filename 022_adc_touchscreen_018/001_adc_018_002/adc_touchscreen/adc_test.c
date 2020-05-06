@@ -10,7 +10,7 @@ void adc_test(void)
 	while(1)
 	{
 		val = adc_read_ain0();
-		vol = 		/* 1023 == 3.3v */
+		vol = val/1023*3.3;		/* 1023 == 3.3v */
 
 		/* 在串口上打印出来 */
 
