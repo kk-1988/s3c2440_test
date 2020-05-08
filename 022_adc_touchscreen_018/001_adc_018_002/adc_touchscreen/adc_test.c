@@ -12,7 +12,7 @@ void adc_test(void)
 	while(1)
 	{
 		val = adc_read_ain0();
-		vol = val/1023*3.3;		/* 1023 == 3.3v */
+		vol = (double)val/1023*3.3;		/* 1023 == 3.3v */
 		m = (int)vol;		/* 3.3 或者 3.01 */
 		vol = vol - m;		/* 小数部分 */
 		n = vol * 1000;		/* 300 */

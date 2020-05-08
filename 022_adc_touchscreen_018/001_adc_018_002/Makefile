@@ -9,6 +9,8 @@ objs += lcd/lcd_controller.o
 objs += lcd/lcd_test.o
 objs += lcd/s3c2440_lcd_controller.o
 objs += lcd/font_8x16.o
+objs += adc_touchscreen/adc.o
+objs += adc_touchscreen/adc_test.o
 
 all: $(objs)
 	#arm-linux-ld -Ttext 0 -Tdata 0x30000000  start.o led.o uart.o init.o main.o -o sdram.elf
