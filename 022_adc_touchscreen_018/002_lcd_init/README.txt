@@ -1,1 +1,1 @@
-lcd 初始化demo
+LCD相关知识demo
