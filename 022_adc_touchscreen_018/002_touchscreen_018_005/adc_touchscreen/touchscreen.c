@@ -2,6 +2,13 @@
 #define TC_INT_BIT 	(9)
 #define INT_ADC_TC	(31)
 
+/* ADCTSC's bits */
+#define UP_DOWN_STAT_BIT 	(8)
+#define YM_ENABLE			(1 << 7)
+#define YM_DISABLE			(0 << 7)
+#define XM_ENABLE			(1 << 5)
+#define XM_DISABLE			(0 << 5)
+
 void Isr_Tc(void)
 {
 	if(!(ADCUPDN & (1 << 1))
