@@ -1,3 +1,6 @@
+#include "touchscreen.h"
+#include "../s3c2440_soc.h"
+
 #define ADC_INT_BIT	(10)
 #define TC_INT_BIT 	(9)
 #define INT_ADC_TC	(31)
@@ -6,12 +9,21 @@
 #define UP_DOWN_STAT_BIT 	(8)
 #define YM_ENABLE			(1 << 7)
 #define YM_DISABLE			(0 << 7)
+#define YP_ENABLE			(0 << 6)
+#define YP_DISABLE			(1 << 6)
 #define XM_ENABLE			(1 << 5)
 #define XM_DISABLE			(0 << 5)
+#define XP_ENABLE			(0 << 4)
+#define XP_DISABLE			(1 << 4)
+#define PULLUP_ENABLE		(0 << 3)
+#define PULLUP_DISABLE		(1 << 3)
+#define AUTO_PST			(1 << 2)
+#define WAIT_INT_MODE		(3)
+#define NO_OPR_MODE			(0)
 
 void Isr_Tc(void)
 {
-	if(!(ADCUPDN & (1 << 1))
+	if(!(ADCUPDN & (1 << 1)))
 		printf("pen down\n\r");
 	else
 		printf("pen up\n\r");
@@ -45,7 +57,7 @@ void adc_ts_reg_init(void)
 
 void enter_wait_pen_down_mode(void)
 {
-	
+	ADCTSC = PULLUP_ENABLE | YM_ENABLE | YP_DISABLE | XP_DISABLE | XM_DISABLE | WAIT_INT_MODE;
 }
 
 void touchscreen_init(void)

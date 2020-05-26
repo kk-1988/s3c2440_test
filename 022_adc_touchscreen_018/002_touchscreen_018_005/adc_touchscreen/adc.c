@@ -9,7 +9,7 @@ void adc_init()
 int adc_read_ain0()
 {
 	ADCCON |= (1 << 0);
-	while(!(ADCCON & (1 << 15));	/* 等待ADC结束 */
+	while(!(ADCCON & (1 << 15)));	/* 等待ADC结束 */
 
 	return ADCDAT0 & 0x3ff;
 }

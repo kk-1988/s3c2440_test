@@ -21,7 +21,15 @@ int main(void)
 	puts("\n\r");
 
 	//nor_flash_test();
-	lcd_test();
+	//lcd_test();
+
+	//测试adc
+	//adc_test();
+	
+	//测试触摸屏
+	touchscreen_test();
+
+	while(1);
 	
 	return 0;
 }
