@@ -28,7 +28,6 @@ int main(void)
 	
 	//测试触摸屏
 	touchscreen_test();
-
 	while(1);
 	
 	return 0;

@@ -6,7 +6,6 @@ void delay(volatile int d)
 	while (d--);
 }
 
-
 int led_init(void)
 {
 	/* 设置GPFCON让GPF4/5/6配置为输出引脚 */
