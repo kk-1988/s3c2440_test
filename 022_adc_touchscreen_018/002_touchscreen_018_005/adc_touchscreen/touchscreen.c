@@ -6,7 +6,9 @@
 #define INT_ADC_TC	(31)
 
 /* ADCTSC's bits */
-#define UP_DOWN_STAT_BIT 	(8)
+#define WAIT_PEN_DOWN 		(0 << 8)
+#define WAIT_PEN_UP			(1 << 8)
+
 #define YM_ENABLE			(1 << 7)
 #define YM_DISABLE			(0 << 7)
 #define YP_ENABLE			(0 << 6)
@@ -21,12 +23,29 @@
 #define WAIT_INT_MODE		(3)
 #define NO_OPR_MODE			(0)
 
+void enter_wait_pen_down_mode(void)
+{
+	ADCTSC = WAIT_PEN_DOWN | PULLUP_ENABLE | YM_ENABLE | YP_DISABLE | XP_DISABLE | XM_DISABLE | WAIT_INT_MODE;
+}
+
+void enter_wait_pen_up_mode(void)
+{
+	ADCTSC = WAIT_PEN_UP | PULLUP_ENABLE | YM_ENABLE | YP_DISABLE | XP_DISABLE | XM_DISABLE | WAIT_INT_MODE;
+}
+
 void Isr_Tc(void)
 {
-	if(!(ADCUPDN & (1 << 1)))
-		printf("pen down\n\r");
-	else
+	if(ADCUPDN & (1 << 1))
+	{
 		printf("pen up\n\r");
+		enter_wait_pen_down_mode();
+	}
+	
+	if(ADCUPDN & (1 << 0))
+	{
+		printf("pen down\n\r");
+		enter_wait_pen_up_mode();
+	}
 }
 
 void AdcTsIntHandle(void)
@@ -36,6 +55,8 @@ void AdcTsIntHandle(void)
 	
 	//if(SUBSRCPND & (1 << ADC_INT_BIT))	/* 如果是ADC中断 */
 		//Isr_Adc();
+
+	SUBSRCPND = (1 << TC_INT_BIT) | (1 << ADC_INT_BIT);
 }
 
 void adc_ts_int_init(void)
@@ -53,11 +74,6 @@ void adc_ts_reg_init(void)
 {
 	ADCCON = (1 << 14) | (49 << 6) | (0 << 3);
 	ADCDLY = 0xff;
-}
-
-void enter_wait_pen_down_mode(void)
-{
-	ADCTSC = PULLUP_ENABLE | YM_ENABLE | YP_DISABLE | XP_DISABLE | XM_DISABLE | WAIT_INT_MODE;
 }
 
 void touchscreen_init(void)
